@@ -23,12 +23,28 @@ function action_rest_dist () {
               'rest', TRUE);
 
   if ( ! $action) {
-    rest_method_not_allowed(_T('rest:methode_non_supportee',
-                               array('methode' => $_SERVER['REQUEST_METHOD'])));
-    exit;
+    $status  = 504;
+    $reponse = array(
+      'erreur' => _T('rest:methode_non_supportee',
+                     array('methode' => $_SERVER['REQUEST_METHOD'])),
+    );
+  } else {
+    list($status, $reponse) = $action();
   }
 
-  /* $status doit être un des codes supportés par http_status(), à savoir
+  rest_http_status($status);
+  echo json_encode($reponse);
+
+  exit();
+}
+
+/**
+ * Fork de la fonction http_status de inc/headers.php
+ * Ajoute des status strings.
+ */
+function rest_http_status($status) {
+	global $REDIRECT_STATUS, $flag_sapi_name;
+	static $status_string = array(
 		200 => '200 OK',
 		204 => '204 No Content',
 		301 => '301 Moved Permanently',
@@ -36,27 +52,17 @@ function action_rest_dist () {
 		304 => '304 Not Modified',
 		401 => '401 Unauthorized',
 		403 => '403 Forbidden',
+    400 => '400 Bad Request',
 		404 => '404 Not Found',
-		503 => '503 Service Unavailable'
-  */
-  list($status, $reponse) = $action();
+		503 => '503 Service Unavailable',
+    504 => '504 Not Allowed',
+	);
 
-  http_status($status);
+	if ($REDIRECT_STATUS && $REDIRECT_STATUS == $status) return;
 
-  echo json_encode($reponse);
-
-  exit();
-}
-
-function rest_method_not_allowed($msg) {
-
-  /* pompé dans inc/headers.php */
 	$php_cgi = ($flag_sapi_name AND preg_match(",cgi,i", @php_sapi_name()));
 	if ($php_cgi)
-		header("Status: 504 Not Allowed");
+		header("Status: ".$status_string[$status]);
 	else
-		header("HTTP/1.0 504 Not Allowed");
-
-  echo json_encode(array('error' => $msg));
-  exit();
+		header("HTTP/1.0 ".$status_string[$status]);
 }
