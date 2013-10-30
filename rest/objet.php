@@ -1,34 +1,12 @@
 <?php
 
-function valider_requete_objet ($objet, $id_objet) {
+function valider_requete_objet () {
 
-  if ( ! $objet) {
-    $status  = 400;
-    $reponse = array(
-      'erreur' => _T('rest:parametre_manquant',
-                     array('parametre' => 'objet')),
-    );
-  } else if ( ! $id_objet) {
-    $status  = 400;
-    $reponse = array(
-      'erreur' => _T('rest:parametre_manquant',
-                     array('parametre' => 'id_objet')),
-    );
-  } else {
-    $table_sql = table_objet_sql($objet);
-    $trouver_table = charger_fonction('trouver_table','base');
-    $desc = $trouver_table($table_sql);
-    if (!$desc OR !isset($desc['field'])) {
-      $status  = 404;
-      $reponse = array(
-         'erreur' => _T('rest:objet_inconnu', array('objet' => $objet)),
-      );
-    } else {
-      $status = FALSE;
-    }
-  }
+  include_spip('inc/rest');
 
-  return array($status, $reponse);
+  return valider_requete(array(
+                           'param_existe' => array('objet', 'id_objet'),
+                           'objet_existe' => array('objet')));
 }
 
 function _request_champs_objet ($objet) {

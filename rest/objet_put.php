@@ -7,7 +7,7 @@ function rest_objet_put_dist () {
   $objet    = _request('objet');
   $id_objet = _request('id_objet');
 
-  list($status, $reponse) = valider_requete_objet($objet, $id_objet);
+  list($status, $reponse) = valider_requete_objet();
 
   /* si $status est FALSE, c'est que la validation s'est bien passée */
   if (( ! $status) AND (! autoriser('modifier', $objet, $id_objet))) {

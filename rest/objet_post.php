@@ -7,7 +7,7 @@ function rest_objet_post_dist () {
   $objet    = _request('objet');
   $id_objet = 'new';
 
-  list($status, $reponse) = valider_requete_objet($objet, $id_objet);
+  list($status, $reponse) = valider_requete_objet();
 
   /* si $status est FALSE, c'est que la validation s'est bien passée */
   if (( ! $status) AND (! autoriser('creer', $objet, $id_objet))) {
