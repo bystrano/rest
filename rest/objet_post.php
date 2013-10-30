@@ -32,7 +32,9 @@ function rest_objet_post_dist () {
         $reponse = array('erreur' => $err);
       } else {
         $status  = 200;
-        $reponse = array('objet' => $objet, 'id_objet' => $id_objet);
+        $reponse = array(
+                     'redirect' => calculer_url_rest_objet($objet,
+                                                           $id_objet));
       }
     }
   }

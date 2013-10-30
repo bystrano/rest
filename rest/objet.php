@@ -47,3 +47,12 @@ function _request_champs_objet ($objet) {
 
   return $set;
 }
+
+function calculer_url_rest_objet ($objet, $id_objet) {
+
+  $url = self();
+  $url = parametre_url($url, 'objet', $objet);
+  $url = parametre_url($url, 'id_objet', $id_objet);
+
+  return url_absolue($url);
+}
