@@ -22,6 +22,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
   'parametre_manquant' => 'Paramètre manquant : @parametre@',
 
 	// R
+  'ressource inconnue' => 'Ressource inconnue : @ressource@',
 	'rest_titre' => 'REST',
 );
 

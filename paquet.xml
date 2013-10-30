@@ -1,7 +1,7 @@
 <paquet
 	prefix="rest"
 	categorie="outil"
-	version="1.0.0"
+	version="1.0.1"
 	etat="dev"
 	compatibilite="[3.0.11;3.0.*]"
 	logo=""
@@ -12,6 +12,8 @@
 	<auteur>Michel Bystranowski</auteur>
 
 	<licence>GNU/GPL</licence>
+
+  <pipeline nom="ressources_rest" action="" />
 
 	<pipeline nom="autoriser" inclure="rest_autorisations.php" /> 
 

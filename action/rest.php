@@ -7,12 +7,17 @@ function action_rest_dist () {
 
   header('Content-Type: application/json; charset: utf8;');
 
-  $liste_ressources = array('objet');
-
   $ressource = _request('ressource');
 
-  if ( ! in_array($ressource, $liste_ressources)) {
+  $liste_des_ressources = pipeline('ressources_rest',
+                                   array('objet', 'lien'));
+
+  if ( ! in_array($ressource, $liste_des_ressources)) {
     http_status(404);
+    echo json_encode(
+           array(
+             'erreur' => _T('ressource_inconnue',
+                            array('ressource' => $ressource))));
     exit;
   }
 
