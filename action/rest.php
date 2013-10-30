@@ -57,6 +57,7 @@ function rest_http_status($status) {
 		403 => '403 Forbidden',
     400 => '400 Bad Request',
 		404 => '404 Not Found',
+    500 => '500 Internal Server Error',
 		503 => '503 Service Unavailable',
     504 => '504 Not Allowed',
 	);

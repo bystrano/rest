@@ -5,6 +5,9 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
+  // C
+  'creation_objet_echoue' => "La création de l'objet @objet@ a échoué.",
+
   // I
   'interdit' => "Vous n'avez pas l'autorisation de faire ça",
 
