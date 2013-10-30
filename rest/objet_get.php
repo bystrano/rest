@@ -2,41 +2,25 @@
 
 function rest_objet_get_dist () {
 
+  include_spip('rest/objet');
+
   $objet    = _request('objet');
   $id_objet = _request('id_objet');
 
-  if ( ! $objet) {
-    $status  = 400;
-    $reponse = array(
-      'erreur' => _T('rest:parametre_manquant',
-                     array('parametre' => 'objet')),
-    );
-  } else if ( ! $id_objet) {
-    $status  = 400;
-    $reponse = array(
-      'erreur' => _T('rest:parametre_manquant',
-                     array('parametre' => 'id_objet')),
-    );
-  } else {
+  list($status, $reponse) = valider_requete_objet($objet, $id_objet);
+
+  if ( ! $status) {
     include_spip('base/abstract_sql');
 
     $table_sql = table_objet_sql($objet);
-    $trouver_table = charger_fonction('trouver_table','base');
-    $desc = $trouver_table($table_sql);
-    if (!$desc OR !isset($desc['field'])) {
+
+    $r = sql_fetsel('*', $table_sql, "id_" . $objet . '=' . intval($id_objet));
+    if ( ! $r) {
       $status  = 404;
-      $reponse = array(
-         'erreur' => _T('rest:objet_inconnu', array('objet' => $objet)),
-      );
+      $reponse = array('erreur' => _T('rest:objet_non_trouve'));
     } else {
-      $r = sql_fetsel('*', $table_sql, "id_" . $objet . '=' . intval($id_objet));
-      if ( ! $r) {
-        $status  = 404;
-        $reponse = array('erreur' => _T('rest:objet_non_trouve'));
-      } else {
-        $status  = 200;
-        $reponse = $r;
-      }
+      $status  = 200;
+      $reponse = $r;
     }
   }
 

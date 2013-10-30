@@ -1,0 +1,32 @@
+<?php
+
+function valider_requete_objet ($objet, $id_objet) {
+
+  if ( ! $objet) {
+    $status  = 400;
+    $reponse = array(
+      'erreur' => _T('rest:parametre_manquant',
+                     array('parametre' => 'objet')),
+    );
+  } else if ( ! $id_objet) {
+    $status  = 400;
+    $reponse = array(
+      'erreur' => _T('rest:parametre_manquant',
+                     array('parametre' => 'id_objet')),
+    );
+  } else {
+    $table_sql = table_objet_sql($objet);
+    $trouver_table = charger_fonction('trouver_table','base');
+    $desc = $trouver_table($table_sql);
+    if (!$desc OR !isset($desc['field'])) {
+      $status  = 404;
+      $reponse = array(
+         'erreur' => _T('rest:objet_inconnu', array('objet' => $objet)),
+      );
+    } else {
+      $status = FALSE;
+    }
+  }
+
+  return array($status, $reponse);
+}
