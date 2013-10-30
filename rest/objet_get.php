@@ -9,12 +9,12 @@ function rest_objet_get_dist () {
 
   list($status, $reponse) = valider_requete_objet($objet, $id_objet);
 
-  if ( ! autoriser('voir', $objet, $id_objet)) {
+  /* si $status est FALSE, c'est que la validation s'est bien passée */
+  if (( ! $status) AND ( ! autoriser('voir', $objet, $id_objet))) {
     $status  = 403;
     $reponse = array('erreur' => _T('rest:interdit'));
   }
 
-  /* si $status est FALSE, c'est que la validation s'est bien passée */
   if ( ! $status) {
     include_spip('base/abstract_sql');
 
