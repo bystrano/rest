@@ -22,6 +22,11 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @pipeline autoriser */
 function rest_autoriser(){}
 
+/* permissions simples, seuls les admins et redacs ont accès à l'API */
+function autoriser_rest_objet($verbe, $type, $id, $qui) {
+
+  return in_array($qui['statut'], array('0minirezo', '1comite'));
+}
 
 /* Exemple
 function autoriser_configurer_rest_dist($faire, $type, $id, $qui, $opt) {

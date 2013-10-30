@@ -16,20 +16,23 @@ function action_rest_dist () {
     exit;
   }
 
-  /* TODO check permissions */
+  $verbe = strtolower($_SERVER['REQUEST_METHOD']);
 
-  $action = charger_fonction(
-              $ressource . '_' . strtolower($_SERVER['REQUEST_METHOD']),
-              'rest', TRUE);
-
-  if ( ! $action) {
-    $status  = 504;
-    $reponse = array(
-      'erreur' => _T('rest:methode_non_supportee',
-                     array('methode' => $_SERVER['REQUEST_METHOD'])),
-    );
+  if ( ! autoriser('rest_' . $ressource, $verbe)) {
+    $status  = 403;
+    $reponse = array('erreur' => _T('rest:interdit'));
   } else {
-    list($status, $reponse) = $action();
+    $action = charger_fonction($ressource . '_' . $verbe, 'rest', TRUE);
+
+    if ( ! $action) {
+      $status  = 504;
+      $reponse = array(
+        'erreur' => _T('rest:methode_non_supportee',
+                       array('methode' => $_SERVER['REQUEST_METHOD'])),
+      );
+    } else {
+      list($status, $reponse) = $action();
+    }
   }
 
   rest_http_status($status);
