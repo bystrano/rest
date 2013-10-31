@@ -1,18 +1,54 @@
 <?php
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-function action_rest_dist () {
+function action_api_rest_dist () {
 
   include_spip('inc/headers');
 
   header('Content-Type: application/json; charset: utf8;');
 
-  $ressource = _request('ressource');
+  $args = explode('/', rtrim(_request('arg'), '/'));
+  $ressource = array_shift($args);
 
-  $liste_des_ressources = pipeline('ressources_rest',
-                                   array('objet', 'lien'));
+  /* Un tableau décrivant les ressources, les paramètres et leurs
+     méthodes de validation */
+  $table_des_ressources = pipeline('ressources_rest',
+      array(
+        'objet' => array(
+                     array(
+                       'nom'      => 'objet',
+                       'criteres' => array('obligatoire',
+                                           'objet_existe'),
+                     ),
+                     array(
+                       'nom'      => 'id_objet',
+                       'criteres' => array('obligatoire'),
+                     ),
+                   ),
+        'lien'  => array(
+                     array(
+                       'nom'      => 'source',
+                       'criteres' => array('obligatoire',
+                                           'objet_existe'),
+                     ),
+                     array(
+                       'nom'      => 'id_source',
+                       'criteres' => array('obligatoire'),
+                     ),
+                     array(
+                       'nom'      => 'cible',
+                       'criteres' => array('obligatoire',
+                                           'objet_existe'),
+                     ),
+                     array(
+                       'nom'      => 'id_cible',
+                       'criteres' => array('obligatoire'),
+                     ),
+                   ),
+        )
+  );
 
-  if ( ! in_array($ressource, $liste_des_ressources)) {
+  if ( ! in_array($ressource, array_keys($table_des_ressources))) {
     http_status(404);
     echo json_encode(
            array(
@@ -36,7 +72,8 @@ function action_rest_dist () {
                        array('methode' => $_SERVER['REQUEST_METHOD'])),
       );
     } else {
-      list($status, $reponse) = $action();
+      list($status, $reponse) =
+        $action($table_des_ressources[$ressource], $args);
     }
   }
 

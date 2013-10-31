@@ -1,25 +1,37 @@
 <?php
 
-function valider_requete ($tests) {
+function valider_requete ($parametres, $args) {
 
-  foreach ($tests['param_existe'] as $param) {
-    if ( ! _request($param)) {
-      return array(400,
-                   array(
-                     'erreur' => _T('rest:parametre_manquant',
-                                    array('parametre' => $param))));
+  foreach ($parametres as $i => $parametre) {
+    foreach ($parametre['criteres'] as $critere) {
+
+      if ($r = call_user_func_array('valider_' . $critere,
+                                    array($parametre['nom'], $args[$i]))) {
+        return list($status, $reponse) = $r;
+      }
     }
   }
+}
 
-  foreach ($tests['objet_existe'] as $param) {
-    $table_sql = table_objet_sql(_request($param));
-    $trouver_table = charger_fonction('trouver_table','base');
-    $desc = $trouver_table($table_sql);
-    if (!$desc OR !isset($desc['field'])) {
-      return array(404,
-                   array(
-                     'erreur' => _T('rest:objet_inconnu',
-                                    array('objet' => _request($param)))));
-    }
+function valider_obligatoire ($nom_parametre, $valeur) {
+
+  if ($valeur === NULL) {
+    return array(400,
+                 array(
+                   'erreur' => _T('rest:parametre_manquant',
+                                  array('parametre' => $nom_parametre))));
+  }
+}
+
+function valider_objet_existe ($nom, $valeur) {
+
+  $table_sql = table_objet_sql($valeur);
+  $trouver_table = charger_fonction('trouver_table','base');
+  $desc = $trouver_table($table_sql);
+  if (!$desc OR !isset($desc['field'])) {
+    return array(404,
+                 array(
+                   'erreur' => _T('rest:objet_inconnu',
+                                  array('objet' => $valeur))));
   }
 }
