@@ -3,7 +3,6 @@
 function rest_objet_get_dist ($parametres, $args) {
 
   include_spip('inc/rest');
-  include_spip('rest/objet');
 
   list($objet, $id_objet) = $args;
 

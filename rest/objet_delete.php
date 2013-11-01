@@ -1,13 +1,13 @@
 <?php
 
-function rest_objet_delete_dist () {
+function rest_objet_delete_dist ($parametres, $args) {
 
+  include_spip('inc/rest');
   include_spip('rest/objet');
 
-  $objet    = _request('objet');
-  $id_objet = _request('id_objet');
+  list($objet, $id_objet) = $args;
 
-  list($status, $reponse) = valider_requete_objet();
+  list($status, $reponse) = valider_requete($parametres, $args);
 
   /* si $status est FALSE, c'est que la validation s'est bien passée */
   if (( ! $status) AND (! autoriser('supprimer', $objet, $id_objet))) {

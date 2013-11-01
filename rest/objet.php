@@ -1,14 +1,5 @@
 <?php
 
-function valider_requete_objet () {
-
-  include_spip('inc/rest');
-
-  return valider_requete(array(
-                           'param_existe' => array('objet', 'id_objet'),
-                           'objet_existe' => array('objet')));
-}
-
 function _request_champs_objet ($objet) {
 
   $table_sql = table_objet_sql($objet);
