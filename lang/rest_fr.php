@@ -17,6 +17,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
   // O
   'objet_inconnu' => "Objet inconnu : @objet@",
   'objet_non_trouve' => "Objet non trouvé",
+  'objet_pas_associable' => "Objet non associable : @objet@",
 
   // P
   'parametre_manquant' => 'Paramètre manquant : @parametre@',
