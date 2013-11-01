@@ -48,6 +48,18 @@ function action_api_rest_dist () {
         )
   );
 
+  if ( ! $ressource) {
+    http_status(200);
+    echo json_encode(
+           array(
+             'message' => _T('rest:bienvenue',
+                 array(
+                   'ressources' => implode(', ', array_keys($table_des_ressources)),
+                 )),
+         ));
+    exit();
+  }
+
   if ( ! in_array($ressource, array_keys($table_des_ressources))) {
     http_status(404);
     echo json_encode(

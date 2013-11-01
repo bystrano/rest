@@ -8,6 +8,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
   // C
   'creation_objet_echoue' => "La création de l'objet @objet@ a échoué.",
 
+  // B
+  'bienvenue' => "Bienvenue sur l'API REST de SPIP, les ressources disponibles sont : @ressources@",
+
   // I
   'interdit' => "Vous n'avez pas l'autorisation de faire ça",
 
