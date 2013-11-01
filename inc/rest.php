@@ -35,3 +35,19 @@ function valider_objet_existe ($nom, $valeur) {
                                   array('objet' => $valeur))));
   }
 }
+
+function _request_champs_table ($table_sql) {
+
+  $trouver_table = charger_fonction('trouver_table', 'base');
+  $desc = $trouver_table($table_sql);
+
+  $champs = $desc['field'];
+
+  $set = array();
+  foreach (array_keys($champs) as $champ) {
+    if ($var = _request($champ))
+      $set[$champ] = $var;
+  }
+
+  return $set;
+}

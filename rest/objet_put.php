@@ -18,7 +18,8 @@ function rest_objet_put_dist ($parametres, $args) {
   if ( ! $status) {
     include_spip('action/editer_objet');
 
-    $set = _request_champs_objet($objet);
+    $table_sql = table_objet_sql($objet);
+    $set = _request_champs_table($table_sql);
 
     if ($err = objet_modifier($objet, $id_objet, $set)) {
       $status  = 500;

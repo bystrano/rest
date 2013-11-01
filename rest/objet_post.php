@@ -18,7 +18,8 @@ function rest_objet_post_dist ($parametres, $args) {
   if ( ! $status) {
     include_spip('action/editer_objet');
 
-    $set = _request_champs_objet($objet);
+    $table_sql = table_objet_sql($objet);
+    $set = _request_champs_table($table_sql);
 
     $id_objet = objet_inserer($objet, $set['id_parent']);
 
