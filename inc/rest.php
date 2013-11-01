@@ -51,3 +51,13 @@ function _request_champs_table ($table_sql) {
 
   return $set;
 }
+
+function calculer_url_rest ($args) {
+
+  $base = url_de_base(0);
+  array_unshift($args, 'rest.api');
+  array_unshift($args, rtrim($base, '/'));
+  $url = implode('/', $args);
+
+  return url_absolue($url);
+}

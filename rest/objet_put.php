@@ -27,8 +27,7 @@ function rest_objet_put_dist ($parametres, $args) {
     } else {
       $status  = 200;
       $reponse = array(
-                   'redirect' => calculer_url_rest_objet($objet,
-                                                         $id_objet));
+                   'redirect' => calculer_url_rest($args));
     }
   }
 
