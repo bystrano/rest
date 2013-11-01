@@ -25,6 +25,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// R
   'ressource inconnue' => 'Ressource inconnue : @ressource@',
 	'rest_titre' => 'REST',
+
+  // T
+  'titre_page_test' => "Tests du plugin REST",
 );
 
 ?>
