@@ -3,6 +3,7 @@
 
 import pdb
 
+import os
 import unittest
 import requests
 
@@ -110,11 +111,10 @@ class TestAccesApiAnonyme(TestAnonyme):
 
 # unittest.main()
 
-suite = unittest.TestLoader().loadTestsFromTestCase(TestAccesApiWebmestre)
-unittest.TextTestRunner(verbosity=2).run(suite)
 
-suite = unittest.TestLoader().loadTestsFromTestCase(TestAccesApiRedac)
-unittest.TextTestRunner(verbosity=2).run(suite)
 
-suite = unittest.TestLoader().loadTestsFromTestCase(TestAccesApiAnonyme)
+# Auto-discover and run tests
+path  = os.path.abspath(os.path.dirname(__file__))
+suite = unittest.TestLoader().discover(path, '*.py')
+
 unittest.TextTestRunner(verbosity=2).run(suite)
