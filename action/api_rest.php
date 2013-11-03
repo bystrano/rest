@@ -1,6 +1,14 @@
 <?php
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
+function rest_repondre ($status, $reponse) {
+
+  rest_http_status($status);
+  echo json_encode($reponse);
+
+  exit();
+}
+
 function action_api_rest_dist () {
 
   include_spip('inc/headers');
@@ -49,58 +57,43 @@ function action_api_rest_dist () {
   );
 
   if ( ! autoriser('rest')) {
-    http_status(403);
-    echo json_encode(
-             array('erreur' => array('erreur' => _T('rest:interdit'))));
-    exit();
+    rest_repondre(403,
+                  array('erreur' => array('erreur' => _T('rest:interdit'))));
   }
 
   if ( ! $ressource) {
-    http_status(200);
-    echo json_encode(
-           array(
-             'message' => _T('rest:bienvenue',
-                 array(
-                   'ressources' => implode(', ', array_keys($table_des_ressources)),
-                 )),
-         ));
-    exit();
+    rest_repondre(200,
+        array(
+          'message' => _T('rest:bienvenue',
+                          array('ressources' => implode(', ', array_keys($table_des_ressources))))));
   }
 
   if ( ! in_array($ressource, array_keys($table_des_ressources))) {
-    http_status(404);
-    echo json_encode(
-           array(
-             'erreur' => _T('ressource_inconnue',
-                            array('ressource' => $ressource))));
-    exit;
+    rest_repondre(404,
+        array(
+          'erreur' => _T('ressource_inconnue',
+                         array('ressource' => $ressource))));
   }
 
-  $verbe = strtolower($_SERVER['REQUEST_METHOD']);
-
+  $verbe  = strtolower($_SERVER['REQUEST_METHOD']);
   $action = charger_fonction($ressource . '_' . $verbe, 'rest', TRUE);
 
   if ( ! $action) {
 
-    $status  = 405;
-    $reponse =
-      array('erreur' => _T('rest:methode_non_supportee',
-                           array('methode' => $_SERVER['REQUEST_METHOD'])));
+    rest_repondre(405,
+        array('erreur' => _T('rest:methode_non_supportee',
+                             array('methode' => $_SERVER['REQUEST_METHOD']))));
   } else {
 
     if ( ! autoriser('rest_' . $ressource, $verbe)) {
-      $status  = 403;
-      $reponse = array('erreur' => _T('rest:interdit'));
+      rest_repondre(403, array('erreur' => _T('rest:interdit')));
     } else {
       list($status, $reponse) =
         $action($table_des_ressources[$ressource], $args);
+      rest_repondre($status, $reponse);
     }
   }
 
-  rest_http_status($status);
-  echo json_encode($reponse);
-
-  exit();
 }
 
 /**
