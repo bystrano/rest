@@ -48,6 +48,13 @@ function action_api_rest_dist () {
         )
   );
 
+  if ( ! autoriser('rest')) {
+    http_status(403);
+    echo json_encode(
+             array('erreur' => array('erreur' => _T('rest:interdit'))));
+    exit();
+  }
+
   if ( ! $ressource) {
     http_status(200);
     echo json_encode(
@@ -71,18 +78,19 @@ function action_api_rest_dist () {
 
   $verbe = strtolower($_SERVER['REQUEST_METHOD']);
 
-  if ( ! autoriser('rest_' . $ressource, $verbe)) {
-    $status  = 403;
-    $reponse = array('erreur' => _T('rest:interdit'));
-  } else {
-    $action = charger_fonction($ressource . '_' . $verbe, 'rest', TRUE);
+  $action = charger_fonction($ressource . '_' . $verbe, 'rest', TRUE);
 
-    if ( ! $action) {
-      $status  = 405;
-      $reponse = array(
-        'erreur' => _T('rest:methode_non_supportee',
-                       array('methode' => $_SERVER['REQUEST_METHOD'])),
-      );
+  if ( ! $action) {
+
+    $status  = 405;
+    $reponse =
+      array('erreur' => _T('rest:methode_non_supportee',
+                           array('methode' => $_SERVER['REQUEST_METHOD'])));
+  } else {
+
+    if ( ! autoriser('rest_' . $ressource, $verbe)) {
+      $status  = 403;
+      $reponse = array('erreur' => _T('rest:interdit'));
     } else {
       list($status, $reponse) =
         $action($table_des_ressources[$ressource], $args);

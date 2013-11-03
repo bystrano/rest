@@ -17,7 +17,12 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 function rest_autoriser(){}
 
 /* permissions simples, seuls les admins et redacs ont accès à l'API */
-function autoriser_rest_objet($verbe, $type, $id, $qui) {
+function autoriser_rest($faire, $type, $id, $qui, $opt) {
+
+  return in_array($qui['statut'], array('0minirezo', '1comite'));
+}
+
+function autoriser_rest_objet($verbe, $type, $id, $qui, $opt) {
 
   return in_array($qui['statut'], array('0minirezo', '1comite'));
 }
