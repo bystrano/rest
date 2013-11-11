@@ -1,12 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import pdb
-
-import os
 import unittest
 import requests
 from spip_auth import spip_api_path, TestAnonyme, TestRedac, TestWebmestre
+
 
 class TestAccesApiWebmestre(TestWebmestre):
 
@@ -63,8 +61,6 @@ class TestAccesApiAnonyme(TestAnonyme):
         self.assertIn('erreur', r.json())
 
 
-# Auto-discover and run tests
-path  = os.path.abspath(os.path.dirname(__file__))
-suite = unittest.TestLoader().discover(path, '*.py')
 
-unittest.TextTestRunner(verbosity=2).run(suite)
+if __name__ == '__main__':
+    unittest.main(verbosity=2)
