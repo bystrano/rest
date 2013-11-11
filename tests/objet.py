@@ -35,7 +35,7 @@ class TestObjetWebmestre(TestWebmestre):
         modifs = {
             'titre': 'Un nouveau titre pour cet article'
         }
-        r = self.s.put(spip_api_path('objet/article/' + id_objet), data=modifs)
+        r = self.s.post(spip_api_path('objet/article/' + id_objet), data=modifs)
         self.assertEqual(r.status_code, 200)
         self.assertIn('redirect', r.json())
         # le lien de redirection pointe vers le bon objet
