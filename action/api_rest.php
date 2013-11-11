@@ -77,12 +77,12 @@ function rest_http_status($status) {
 		301 => '301 Moved Permanently',
 		302 => '302 Found',
 		304 => '304 Not Modified',
-    400 => '400 Bad Request',
+        400 => '400 Bad Request',
 		401 => '401 Unauthorized',
 		403 => '403 Forbidden',
 		404 => '404 Not Found',
-    405 => '405 Not Allowed',
-    500 => '500 Internal Server Error',
+        405 => '405 Not Allowed',
+        500 => '500 Internal Server Error',
 		503 => '503 Service Unavailable',
 	);
 
