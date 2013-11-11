@@ -7,8 +7,11 @@ import os
 import unittest
 
 if __name__ == '__main__':
-    # Auto-discover and run tests
-    path  = os.path.abspath(os.path.dirname(__file__))
-    suite = unittest.TestLoader().discover(path, '*.py')
 
+    path  = os.path.abspath(os.path.dirname(__file__))
+
+    suite = unittest.TestLoader().discover(path, 'rest.py')
+    unittest.TextTestRunner(verbosity=2).run(suite)
+
+    suite = unittest.TestLoader().discover(path, 'objet.py')
     unittest.TextTestRunner(verbosity=2).run(suite)
