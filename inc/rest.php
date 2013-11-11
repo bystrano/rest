@@ -56,7 +56,7 @@ function _request_champs_table ($table_sql) {
 
 function calculer_url_rest ($args) {
 
-  $base = url_de_base(0);
+  $base = url_de_base(2);
   array_unshift($args, 'rest.api');
   array_unshift($args, rtrim($base, '/'));
   $url = implode('/', $args);

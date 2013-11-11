@@ -15,10 +15,6 @@ objet:
       criteres:
         - obligatoire
         - objet_existe
-    - 
-      nom: id_objet
-      criteres:
-        - obligatoire
   put:
     - 
       nom: objet
