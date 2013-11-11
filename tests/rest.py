@@ -7,14 +7,22 @@ import os
 import unittest
 import requests
 
+HOST                   = 'http://localhost/spip-dev/'
+LOGIN_WEBMESTRE        = 'webmestre'
+MOT_DE_PASSE_WEBMESTRE = 'bonjour'
+
 # Pour fonctionner, ces tests ont besoin que le plugin SPIP "Incarner"
 # soit installé. (https://github.com/bystrano/incarner)
 
-# Pour effectuer des requêtes en tant que webmestre, on utilise un
-# cookie de session qu'il faut récupérer dans son navigateur en se
-# connectant à l'espace privé et en recopiant la valeur ici :
-COOKIE_SESSION_WEBMESTRE = '1_14e4628ce2fe4348224baa5d269a03bf'
-HOST                     = 'http://localhost/spip-dev/'
+# Pour effectuer des requêtes en tant que webmestre, il faut avoir un
+# cookie de session valide. On l'obtient en se loguant en http, avec
+# les login / mot de passe fournis plus haut :
+s    =  requests.Session()
+url  =  HOST[:7] + LOGIN_WEBMESTRE + ':' + MOT_DE_PASSE_WEBMESTRE
+url += '@' + HOST[7:] + 'ecrire'
+r = s.get(url)
+
+COOKIE_SESSION_WEBMESTRE = s.cookies['spip_session']
 
 class TestWebmestre(unittest.TestCase):
 
