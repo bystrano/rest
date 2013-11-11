@@ -1,0 +1,33 @@
+objet:
+  - 
+    nom: objet
+    criteres:
+      - obligatoire
+      - objet_existe
+  - 
+    nom: id_objet
+    criteres:
+      - obligatoire
+lien:
+  - 
+    nom: source
+    criteres:
+      - obligatoire
+      - objet_existe
+  - 
+    nom: id_source
+    criteres:
+      - obligatoire
+  - 
+    nom: cible
+    criteres:
+      - obligatoire
+      - objet_existe
+  - 
+    nom: id_cible
+    criteres:
+      - obligatoire
+
+      
+    
+      

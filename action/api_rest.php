@@ -20,41 +20,10 @@ function action_api_rest_dist () {
 
   /* Un tableau décrivant les ressources, les paramètres et leurs
      méthodes de validation */
+  include_spip('yaml_fonctions');
   $table_des_ressources = pipeline('ressources_rest',
-      array(
-        'objet' => array(
-                     array(
-                       'nom'      => 'objet',
-                       'criteres' => array('obligatoire',
-                                           'objet_existe'),
-                     ),
-                     array(
-                       'nom'      => 'id_objet',
-                       'criteres' => array('obligatoire'),
-                     ),
-                   ),
-        'lien'  => array(
-                     array(
-                       'nom'      => 'source',
-                       'criteres' => array('obligatoire',
-                                           'objet_existe'),
-                     ),
-                     array(
-                       'nom'      => 'id_source',
-                       'criteres' => array('obligatoire'),
-                     ),
-                     array(
-                       'nom'      => 'cible',
-                       'criteres' => array('obligatoire',
-                                           'objet_existe'),
-                     ),
-                     array(
-                       'nom'      => 'id_cible',
-                       'criteres' => array('obligatoire'),
-                     ),
-                   ),
-        )
-  );
+                                   decoder_yaml(
+                                       find_in_path('ressources.yaml')));
 
   if ( ! autoriser('rest')) {
     rest_repondre(403,

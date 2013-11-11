@@ -17,4 +17,6 @@
 
 	<pipeline nom="autoriser" inclure="rest_autorisations.php" /> 
 
+  <necessite nom="yaml" compatibilite="[1.5.0;[" />
+
 </paquet>
