@@ -1,32 +1,121 @@
 objet:
-  - 
-    nom: objet
-    criteres:
-      - obligatoire
-      - objet_existe
-  - 
-    nom: id_objet
-    criteres:
-      - obligatoire
+  get:
+    - 
+      nom: objet
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_objet
+      criteres:
+        - obligatoire
+  post:
+    - 
+      nom: objet
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_objet
+      criteres:
+        - obligatoire
+  put:
+    - 
+      nom: objet
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_objet
+      criteres:
+        - obligatoire
+  delete:
+    - 
+      nom: objet
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_objet
+      criteres:
+        - obligatoire
 lien:
-  - 
-    nom: source
-    criteres:
-      - obligatoire
-      - objet_existe
-  - 
-    nom: id_source
-    criteres:
-      - obligatoire
-  - 
-    nom: cible
-    criteres:
-      - obligatoire
-      - objet_existe
-  - 
-    nom: id_cible
-    criteres:
-      - obligatoire
+  get:
+    - 
+      nom: source
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_source
+      criteres:
+        - obligatoire
+    - 
+      nom: cible
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_cible
+      criteres:
+        - obligatoire
+  post:
+    - 
+      nom: source
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_source
+      criteres:
+        - obligatoire
+    - 
+      nom: cible
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_cible
+      criteres:
+        - obligatoire
+  put:
+    - 
+      nom: source
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_source
+      criteres:
+        - obligatoire
+    - 
+      nom: cible
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_cible
+      criteres:
+        - obligatoire
+  delete:
+    - 
+      nom: source
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_source
+      criteres:
+        - obligatoire
+    - 
+      nom: cible
+      criteres:
+        - obligatoire
+        - objet_existe
+    - 
+      nom: id_cible
+      criteres:
+        - obligatoire
 
       
     

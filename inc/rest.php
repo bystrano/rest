@@ -2,7 +2,9 @@
 
 function valider_requete ($parametres, $args) {
 
-  foreach ($parametres as $i => $parametre) {
+  $verbe  = strtolower($_SERVER['REQUEST_METHOD']);
+
+  foreach ($parametres[$verbe] as $i => $parametre) {
     foreach ($parametre['criteres'] as $critere) {
 
       if ($r = call_user_func_array('valider_' . $critere,
