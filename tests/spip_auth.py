@@ -4,9 +4,10 @@
 import unittest
 import requests
 
-HOST  = 'http://localhost/spip-dev/'
-LOGIN = 'webmestre' # Doivent être des identifiants
-PWD   = 'bonjour'   # de webmestre
+HOST        = 'http://localhost/spip-dev/'
+LOGIN       = 'webmestre' # Doivent être des identifiants
+PWD         = 'bonjour'   # de webmestre
+LOGIN_REDAC = 'test'
 
 # Pour fonctionner, ces tests ont besoin que le plugin SPIP "Incarner"
 # soit installé. (https://github.com/bystrano/incarner)
@@ -25,38 +26,31 @@ def spip_api_path (api_path):
 
     return HOST + 'rest.api/' + api_path
 
+def spip_session(login):
+    '''Retourne un objet requests.Session connecté avec le login donné.'''
+
+    s = requests.Session()
+    r = s.get(HOST,
+              params={
+                  'action': 'incarner',
+                  'login': login
+              },
+              cookies={
+                  'spip_session': COOKIE_SESSION_WEBMESTRE
+              })
+    return s
+
 class TestWebmestre(unittest.TestCase):
 
     def setUp(self):
-        # initialise la session de webmestre
-        self.s = requests.Session()
-        r = self.s.get(HOST,
-                       params={
-                           'action': 'incarner',
-                           'login': 'webmestre'
-                       },
-                       cookies={
-                           'spip_session': COOKIE_SESSION_WEBMESTRE
-                       })
-        self.assertEqual(r.status_code, 204)
+        self.s = spip_session(LOGIN)
 
 class TestRedac(unittest.TestCase):
 
     def setUp(self):
-        # initialise la session de redac
-        self.s = requests.Session()
-        r = self.s.get(HOST,
-                       params={
-                           'action': 'incarner',
-                           'login': 'test'
-                       },
-                       cookies={
-                           'spip_session': COOKIE_SESSION_WEBMESTRE
-                       })
-        self.assertEqual(r.status_code, 204)
+        self.s = spip_session(LOGIN_REDAC)
 
 class TestAnonyme(unittest.TestCase):
 
     def setUp(self):
-        # initialise la session anonyme
         self.s = requests.Session()
