@@ -21,7 +21,10 @@ function rest_objet_post_dist ($parametres, $args) {
     $table_sql = table_objet_sql($objet);
     $set = _request_champs_table($table_sql);
 
-    $id_objet = objet_inserer($objet, $set['id_parent']);
+    if ( ! $id_objet) {
+      $id_objet = objet_inserer($objet, $set['id_parent']);
+      $args[] = $id_objet;
+    }
 
     if ( ! $id_objet) {
       $status  = 500;
@@ -32,7 +35,6 @@ function rest_objet_post_dist ($parametres, $args) {
         $status  = 500;
         $reponse = array('erreur' => $err);
       } else {
-        $args['id_objet'] = $id_objet;
         array_unshift($args, 'objet');
         $status  = 200;
         $reponse = array(
