@@ -9,6 +9,7 @@ class TestObjetWebmestre(TestWebmestre):
 
     def test_objet_get(self):
         '''Un webmestre peut lire les objets'''
+
         r = self.s.get(spip_api_path('objet/article/1'))
         self.assertEqual(r.status_code, 200)
         self.assertIn('titre', r.json())
@@ -50,6 +51,34 @@ class TestObjetWebmestre(TestWebmestre):
         # Demander l'objet effacé ne retourne rien
         r = self.s.get(spip_api_path('objet/article/' + id_objet))
         self.assertEqual(r.status_code, 404)
+        self.assertIn('erreur', r.json())
+
+class TestObjetAnonyme(TestAnonyme):
+
+    def test_objet_get(self):
+        '''Les requêtes GET sont interdites aux anonymes'''
+
+        r = self.s.get(spip_api_path('objet/article/1'))
+        self.assertEqual(r.status_code, 403)
+        self.assertIn('erreur', r.json())
+
+    def test_objet_post(self):
+        '''Les requêtes POST sont interdites aux anonymes'''
+
+        article = {
+            'titre': 'Un nouvel article',
+            'texte': "Je suis un article de test",
+            'statut': 'publie'
+        }
+        r = self.s.post(spip_api_path('objet/article'), data=article)
+        self.assertEqual(r.status_code, 403)
+        self.assertIn('erreur', r.json())
+
+    def test_objet_delete(self):
+        '''Les requêtes DELETE sont interdites aux anonymes'''
+
+        r = self.s.delete(spip_api_path('objet/article/1'))
+        self.assertEqual(r.status_code, 403)
         self.assertIn('erreur', r.json())
 
 
