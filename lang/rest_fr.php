@@ -14,6 +14,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
   // I
   'interdit' => "Vous n'avez pas l'autorisation de faire ça",
 
+  // L
+  'lien_non_trouve' => "Lien non trouvé",
+
   // M
   'methode_non_supportee' => "Ce verbe (@methode@) n'est pas supporté pour cette ressource.",
 

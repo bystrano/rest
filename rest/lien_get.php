@@ -35,8 +35,13 @@ function rest_lien_get_dist ($parametres, $args) {
                         'objet=' . sql_quote($cible),
                         'id_objet' . '=' . intval($id_cible),
                      ));
-      $status  = 200;
-      $reponse = $r;
+      if ($r) {
+        $status  = 200;
+        $reponse = $r;
+      } else {
+        $status  = 404;
+        $reponse = array('erreur' => _T('rest:lien_non_trouve'));
+      }
     }
   }
 

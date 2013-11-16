@@ -34,10 +34,11 @@ function rest_lien_post_dist ($parametres, $args) {
       objet_associer(array($source => $id_source),
                      array($cible  => $id_cible),
                      $set);
+      array_unshift($args, 'lien');
       $status  = 200;
       $reponse =
         array(
-          'redirect' => calculer_url_rest($parametres, $args),
+          'redirect' => calculer_url_rest($args),
         );
     }
   }

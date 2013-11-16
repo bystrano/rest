@@ -61,5 +61,7 @@ function calculer_url_rest ($args) {
   array_unshift($args, rtrim($base, '/'));
   $url = implode('/', $args);
 
+  include_spip('inc/filtres_mini');
+
   return url_absolue($url);
 }
