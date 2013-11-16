@@ -15,3 +15,6 @@ if __name__ == '__main__':
 
     suite = unittest.TestLoader().discover(path, 'objet.py')
     unittest.TextTestRunner(verbosity=2).run(suite)
+
+    suite = unittest.TestLoader().discover(path, 'lien.py')
+    unittest.TextTestRunner(verbosity=2).run(suite)
